@@ -9,18 +9,45 @@
 @endsection
 
 @section('content')
+    @if(!empty(Request::segment(1)))
+        <section class="filter-bar">
+            A filter has been set! <a href="{{route('index')}}">Show all quotes</a>
+        </section>
+    @endif
+    @if(count($errors) >0)
+        <section class="info-box fail">
+            @foreach($errors->all() as $error)
+                {{ $error  }} <br>
+            @endforeach
+        </section>
+    @endif
+
+    @if(Session::has('success'))
+        <section class="info-box success">
+            {{Session::get('success')}}
+        </section>
+    @endif
     <section class="quotes">
         <h1>Latest Quotes</h1>
         @for($i= 0; $i < count($quotes); $i++)
-            <article class="quote{{--{{  $i % 3 === 0 ? ' fist-in-line' : (($i + 1) % 3 === 0 ? ' last-in-line' : '') }}--}}">
-                <div class="delete"><a href="#">x</a></div>
+            <article
+                    class="quote{{--{{  $i % 3 === 0 ? ' fist-in-line' : (($i + 1) % 3 === 0 ? ' last-in-line' : '') }}--}}">
+                <div class="delete"><a href="{{ route('delete', ['quote_id' => $quotes[$i]->id]) }}">X</a></div>
                 {{ $quotes[$i]->quote }}
-                <div class="info">Created by <a href="#">{{ $quotes[$i]->author->name}}</a>
+                <div class="info">Created by <a
+                            href="{{route('index', ['author' => $quotes[$i]->author->name])}}">{{ $quotes[$i]->author->name}}</a>
                     on {{ $quotes[$i]->author->created_at }}</div>
             </article>
         @endfor
+
         <div class="pagination">
-            Pagination
+            @if($quotes->currentPage() !== 1)
+                <a href="{{ $quotes->previousPageUrl() }}"><i class="fa fa-caret-left"></i></a>
+            @endif
+            @if($quotes->currentPage() !== $quotes->lastPage() && $quotes->hasPages())
+                <a href="{{ $quotes->nextPageUrl() }}"><i class="fa fa-caret-right"></i></a>
+            @endif
+
         </div>
 
     </section>

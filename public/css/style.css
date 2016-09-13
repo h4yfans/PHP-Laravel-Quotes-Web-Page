@@ -1,4 +1,4 @@
-body{
+div.maibody{
     padding:0;
     margin: 0;
     font-family: 'Georgia',sans-serif;
@@ -103,8 +103,6 @@ body{
 
 .btn{
     border:1px solid #ccc;
-    -webkit-border-radius:3px;
-    -moz-border-radius:3px;
     border-radius:3px;
     background-color: #ffecd2;
     font-size: inherit;
@@ -121,8 +119,6 @@ body{
     text-align: center;
     margin: auto;
     padding: 16px;
-    -webkit-border-radius:3px;
-    -moz-border-radius:3px;
     border-radius:3px;
     width: 350px;
 }
@@ -140,7 +136,7 @@ body{
 }
 
 .filter-bar{
-    width: 100px;
+    width: 100%;
     padding: 16px;
     background-color: #f9ffc3;
     color:black;
